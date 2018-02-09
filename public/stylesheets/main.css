@@ -1,0 +1,70 @@
+html {
+    background: #eee;
+}
+
+header h1 {
+    padding-left: 20px;
+    color: #5C7B2F;
+    font-weight: normal;
+    font-size: 24pt;
+}
+
+section#main {
+    position: relative;
+    padding: 5em 2em;
+    border-bottom: 1px solid #ccc;
+    min-height: 600px;
+}
+
+section#main .topRight {
+    position: absolute;
+    right: 20px;
+    top: 70px;
+}
+
+table.cars {
+    margin-left: 20px;
+    font-size: 12pt;
+}
+
+a.btn {
+    font-size: 12pt;
+}
+
+table.cars .col3, table.cars .col4 {
+    width: 30%;
+    min-width: 200px;
+}
+
+input[type=submit] {
+    font-size: 12pt;
+    background-color: white;
+    color: #93C54B;
+}
+
+#actions {
+    position: relative;
+}
+
+#actions #add {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#pagination {
+    position: relative;
+}
+
+#pagination ul {
+    position: absolute;
+    left: 40%;
+}
+
+#pagination ul li{
+    display: inline;
+}
+
+#pagination ul .current a {
+    color: #666;
+}

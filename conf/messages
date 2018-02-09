@@ -1,0 +1,22 @@
+# Messages
+
+app.title=Car Parking Application
+
+cars.list.title={0,choice,0#No cars|1#One car|1<{0,number,integer} cars} on parking
+car.number.title=Car number
+car.arrival.title=Arrived
+car.departure.title=Departed
+
+car.nodata.title=Nothing to display
+
+add.title=Add
+edit.title=Edit
+save.title=Save
+cancel.title=Cancel
+
+filter.placeholder.title=Filter by car number
+filter.title=Filter
+
+next.title=Next
+prev.title=Previous
+of.title=of

@@ -1,0 +1,116 @@
+@(currentPage: Page[(Car)], currentOrderBy: Int, currentFilter: String)(implicit request: MessagesRequestHeader)
+
+@import helper._
+
+    @****************************************
+    * Helper generating navigation links *
+    ****************************************@
+@link(newPage: Int, newOrderBy: Option[Int] = None) = @{
+    routes.CarController.list(newPage, newOrderBy.map { orderBy =>
+        if(orderBy == scala.math.abs(currentOrderBy)) -currentOrderBy else orderBy
+    }.getOrElse(currentOrderBy), currentFilter)
+
+}
+
+    @**********************************
+    * Helper generating table headers *
+    ***********************************@
+@header(orderBy: Int, title: String) = {
+    <th class="col@orderBy header @if(scala.math.abs(currentOrderBy) == orderBy) {
+        @{
+            if(currentOrderBy < 0) "headerSortDown" else "headerSortUp"
+        }
+    }">
+        <a href="@link(0, Some(orderBy))">@title</a>
+    </th>
+}
+
+@main("list") {
+    <h1 id="section-title">@Messages("cars.list.title", currentPage.total)</h1>
+
+    @request.flash.get("success").map { message =>
+        <div class="alert-message warning">
+            <strong>Done!</strong> @message
+        </div>
+    }
+
+    <div id="actions">
+        @form(action = routes.CarController.list()) {
+            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="@Messages("filter.placeholder.title")">
+            <input type="submit" id="searchsubmit" value="@Messages("filter.title")" class="btn primary">
+        }
+
+        <a class="btn success" id="add" href="@routes.CarController.create()">@Messages("add.title")</a>
+    </div>
+
+    @Option(currentPage.items).filterNot(_.isEmpty).map { cars =>
+    <table class="cars zebra-striped">
+        <thead>
+            <tr>
+                @header(2, Messages("car.number.title"))
+                @header(3, Messages("car.arrival.title"))
+                @header(4, Messages("car.departure.title"))
+            </tr>
+        </thead>
+        <tbody>
+        @cars.map {
+            case (car) => {
+                <tr>
+                    <td><a href="@routes.CarController.edit(car.id.get)"> @car.number </a></td>
+                    <td> @car.arrival.format("dd.MM.yyyy HH:mm") </td>
+                    <td> @car.departure.map(_.format("dd.MM.yyyy HH:mm")).getOrElse { <em>-</em> } </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+
+    <div id="pagination" class="pagination">
+        <ul>
+            @currentPage.prev.map { page =>
+            <li class="prev">
+                <a href="@link(page)">&larr; Previous</a>
+            </li>
+            }.getOrElse {
+                <li class="prev disabled">
+                    <a>&larr; @Messages("prev.title")</a>
+                </li>
+            }
+        <li class="current">
+            <a> @(currentPage.offset + 1)-@(currentPage.offset + cars.size) @Messages("of.title") @currentPage.total</a>
+        </li>
+            @currentPage.next.map { page =>
+            <li class="next">
+                <a href="@link(page)">@Messages("next.title") &rarr;</a>
+            </li>
+            }.getOrElse {
+                <li class="next disabled">
+                    <a>@Messages("next.title") &rarr;</a>
+                </li>
+            }
+        </ul>
+    </div>
+    }.getOrElse {
+        <div class="well">
+            <em>@Messages("car.nodata.title")</em>
+        </div>
+
+        <div id="pagination" class="pagination">
+            <ul>
+                @currentPage.prev.map { page =>
+                <li class="prev">
+                    <a href="@link(page)">&larr; Previous</a>
+                </li>
+                }.getOrElse {
+                    <li class="prev disabled">
+                        <a>&larr; @Messages("prev.title")</a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+    }
+
+
+}
+
