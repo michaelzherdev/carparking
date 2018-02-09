@@ -15,5 +15,5 @@ hsqldb в варианте in-memory или простого внешнего ф
 
 #### Запуск
 
-1. Через play console.
-2. Через IDE (Intellij IDEA) как Play 2 App (Должны быть установлены плагины Scala, Playframework support)
+1. Через IDE (Intellij IDEA) как Play 2 App (Должны быть установлены плагины Scala, Playframework support)
+2. Через play console.
